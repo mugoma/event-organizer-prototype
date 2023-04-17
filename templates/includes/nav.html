@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg text-light" style="background-color: #3c3732;">
+  <div class="container-fluid">
+    <a class="navbar-brand text-light" href="/">Event Organizer</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link text-light" aria-current="page" href="/">Home</a>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'events:user_events' %}">My RSVPs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'events:user_created_events' %}">My Events</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'accounts:logout' %}">Log Out</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'accounts:login' %}">Login</a>
+        </li>
+        {% endif %}
+
+      </ul>
+      <form class="d-flex" role="search" action="{% url 'events:search' %}">
+        <input class="form-control me-2" type="search" placeholder="Search Events" aria-label="Search" name="search_term">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>

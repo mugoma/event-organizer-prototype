@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container">
+    <h1>{{ event.title }} Event</h1>
+    <p>{{ event.description }}</p>
+    <p><strong>Start Time:</strong> {{event.start_time}}</p>
+    {% if event.eventrsvp_set.count > 0 %}
+    <a href="{% url 'events:change_rsvp_status' event.id 'remove' %}" class="btn btn-danger">Cancel RSVP</a>
+
+    {% else %}
+    <a href="{% url 'events:change_rsvp_status' event.id 'add' %}" class="btn btn-success"> RSVP</a>
+    {% endif %}
+    {% if event.owner.id == request.user.id %}
+    <a href="{% url 'events:update' event.id %}" class="btn btn-success"> Edit this Event</a>
+    {% endif %}
+    <hr>
+    <div class="my-3">
+        <h2>Other Attendees</h2>
+        {% for user in other_attendees %}
+        <p>
+            {% if user.first_name %}
+            {{user.first_name| capfirst }}
+        {% else %}
+            A. 
+
+        {% endif %}
+        {% if user.first_name %}
+            {{user.last_name| capfirst }}
+            {% else %}
+            Nother 
+
+        {% endif %}
+    
+    </p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock body %}

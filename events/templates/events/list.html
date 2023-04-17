@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container">
+    <h1> Events</h1>
+    {% for event in event_list %}
+    <div class="col-12 col-lg-8" title="{{event.title }}">
+        <a href="{% url 'events:detail' event.id %}">
+            <p>{{event.title}}</p>
+            <p>{{ event.description | truncatewords:10 }}</p>
+        </a>
+
+        <p><strong>Date: </strong> {{event.start_time}}</p>
+        {% if event.eventrsvp_set.count > 0 %}
+        <a href="{% url 'events:change_rsvp_status' event.id 'remove' %}" class="btn btn-danger">Cancel RSVP</a>
+
+        {% else %}
+        <a href="{% url 'events:change_rsvp_status' event.id 'add' %}" class="btn btn-success"> RSVP</a>
+        {% endif %}
+        {% if request.user.is_authenticated and event.owner.id == request.user.id %}
+        <a href="{% url 'events:update' event.id %}" class="btn btn-success"> Edit this Event</a>
+        {% endif %}
+    </div>
+    <hr>
+    {% empty %}
+    <p>Oops! No events to show. <a href="{% url 'events:create' %}">Create one now</a></p>
+    {% endfor %}
+</div>
+
+{% endblock body %}

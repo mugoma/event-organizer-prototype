@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+<div class="container">
+
+    <h1>Create Event</h1>
+    <form method="post">
+        <div>
+            {% csrf_token %}
+            {% crispy form %}
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary" name="submit">Create Event</button>
+                <a class="btn btn-secondary" href="{% url 'events:list' %}" role="button">Back to Events List</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock body %}
